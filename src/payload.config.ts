@@ -9,6 +9,9 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Cars } from './collections/Cars'
+import { Manufacturers } from './collections/Manufacturers'
+import { Pages } from './collections/Pages'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,21 +26,8 @@ export default buildConfig({
   collections: [
     Users,
     Media,
-    {
-      slug: 'cars',
-      admin: { useAsTitle: 'title' },
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-        },
-        {
-          name: 'featuredImage',
-          type: 'upload', // type upload needs to be related to a collection
-          relationTo: 'media',
-        },
-      ],
-    },
+    Cars,
+    Manufacturers,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

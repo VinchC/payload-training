@@ -14,15 +14,21 @@ export interface Config {
     users: User;
     media: Media;
     cars: Car;
+    manufacturers: Manufacturer;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    manufacturers: {
+      cars: 'cars';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     cars: CarsSelect<false> | CarsSelect<true>;
+    manufacturers: ManufacturersSelect<false> | ManufacturersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -103,6 +109,22 @@ export interface Car {
   id: string;
   title?: string | null;
   featuredImage?: (string | null) | Media;
+  manufacturer?: (string | null) | Manufacturer;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "manufacturers".
+ */
+export interface Manufacturer {
+  id: string;
+  title?: string | null;
+  logo?: (string | null) | Media;
+  cars?: {
+    docs?: (string | Car)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -124,6 +146,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'cars';
         value: string | Car;
+      } | null)
+    | ({
+        relationTo: 'manufacturers';
+        value: string | Manufacturer;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -207,6 +233,18 @@ export interface MediaSelect<T extends boolean = true> {
 export interface CarsSelect<T extends boolean = true> {
   title?: T;
   featuredImage?: T;
+  manufacturer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "manufacturers_select".
+ */
+export interface ManufacturersSelect<T extends boolean = true> {
+  title?: T;
+  logo?: T;
+  cars?: T;
   updatedAt?: T;
   createdAt?: T;
 }
