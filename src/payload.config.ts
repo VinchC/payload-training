@@ -60,7 +60,7 @@ export default buildConfig({
             slug: 'carPrice',
             admin: {
               components: {
-                Label: 'components/CarPriceLabel',
+                Label: '/components/CarPriceLabel',
               },
             },
             fields: [
