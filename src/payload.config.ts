@@ -1,7 +1,7 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -24,7 +24,57 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Cars, Manufacturers, Pages],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      BlocksFeature({
+        blocks: [
+          {
+            slug: 'carHighLight',
+            fields: [
+              {
+                name: 'car',
+                type: 'relationship',
+                relationTo: 'cars',
+              },
+              {
+                name: 'type',
+                type: 'radio',
+                defaultValue: 'image',
+                options: [
+                  {
+                    label: 'Image',
+                    value: 'image',
+                  },
+                  {
+                    label: 'Gallery',
+                    value: 'gallery',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        inlineBlocks: [
+          {
+            slug: 'carPrice',
+            admin: {
+              components: {
+                Label: 'components/CarPriceLabel',
+              },
+            },
+            fields: [
+              {
+                name: 'car',
+                type: 'relationship',
+                relationTo: 'cars',
+              },
+            ],
+          },
+        ],
+      }),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
