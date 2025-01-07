@@ -20,7 +20,25 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [
+    Users,
+    Media,
+    {
+      slug: 'cars',
+      admin: { useAsTitle: 'title' },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+        },
+        {
+          name: 'featuredImage',
+          type: 'upload', // type upload needs to be related to a collection
+          relationTo: 'media',
+        },
+      ],
+    },
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
