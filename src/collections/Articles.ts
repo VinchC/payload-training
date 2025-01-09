@@ -1,18 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
-export const Cars: CollectionConfig = {
-  slug: 'cars',
+export const Articles: CollectionConfig = {
+  slug: 'articles',
   admin: {
     useAsTitle: 'title',
-  },
-  // utility ???
-  hooks: {
-    afterRead: [
-      ({ doc }) => {
-        doc.doILikeIt = doc.title.includes('Vantage')
-        return doc
-      },
-    ],
   },
   fields: [
     {
@@ -25,9 +16,9 @@ export const Cars: CollectionConfig = {
       relationTo: 'media',
     },
     {
-      name: 'manufacturer',
+      name: 'journal',
       type: 'relationship', // type relationship upload needs to be related to a collection
-      relationTo: 'manufacturers',
+      relationTo: 'journals',
     },
   ],
 }

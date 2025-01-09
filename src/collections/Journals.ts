@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-export const Manufacturers: CollectionConfig = {
-  slug: 'manufacturers',
+export const Journals: CollectionConfig = {
+  slug: 'journals',
   admin: {
     useAsTitle: 'title',
   },
@@ -16,10 +16,10 @@ export const Manufacturers: CollectionConfig = {
       relationTo: 'media',
     },
     {
-      name: 'cars',
+      name: 'article',
       type: 'join', // implements a bi-directional relation to a collection
-      on: 'manufacturer',
-      collection: 'cars',
+      on: 'journal',
+      collection: 'articles',
     },
   ],
 }

@@ -9,8 +9,8 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Cars } from './collections/Cars'
-import { Manufacturers } from './collections/Manufacturers'
+import { Articles } from './collections/Articles'
+import { Journals } from './collections/Journals'
 import { Pages } from './collections/Pages'
 
 const filename = fileURLToPath(import.meta.url)
@@ -23,19 +23,19 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Cars, Manufacturers, Pages],
+  collections: [Users, Media, Articles, Journals, Pages],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,
       BlocksFeature({
         blocks: [
           {
-            slug: 'carHighLight',
+            slug: 'articleHighLight',
             fields: [
               {
-                name: 'car',
+                name: 'article',
                 type: 'relationship',
-                relationTo: 'cars',
+                relationTo: 'articles',
               },
               {
                 name: 'type',
@@ -57,17 +57,17 @@ export default buildConfig({
         ],
         inlineBlocks: [
           {
-            slug: 'carPrice',
+            slug: 'articleTitle',
             admin: {
               components: {
-                Label: '/components/CarPriceLabel',
+                Label: '/components/ArticleTitleLabel',
               },
             },
             fields: [
               {
-                name: 'car',
+                name: 'article',
                 type: 'relationship',
-                relationTo: 'cars',
+                relationTo: 'articles',
               },
             ],
           },

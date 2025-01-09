@@ -13,23 +13,23 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    cars: Car;
-    manufacturers: Manufacturer;
+    articles: Article;
+    journals: Journal;
     pages: Page;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
-    manufacturers: {
-      cars: 'cars';
+    journals: {
+      article: 'articles';
     };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    cars: CarsSelect<false> | CarsSelect<true>;
-    manufacturers: ManufacturersSelect<false> | ManufacturersSelect<true>;
+    articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    journals: JournalsSelect<false> | JournalsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -123,26 +123,26 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cars".
+ * via the `definition` "articles".
  */
-export interface Car {
+export interface Article {
   id: string;
   title?: string | null;
   featuredImage?: (string | null) | Media;
-  manufacturer?: (string | null) | Manufacturer;
+  journal?: (string | null) | Journal;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "manufacturers".
+ * via the `definition` "journals".
  */
-export interface Manufacturer {
+export interface Journal {
   id: string;
   title?: string | null;
   logo?: (string | null) | Media;
-  cars?: {
-    docs?: (string | Car)[] | null;
+  article?: {
+    docs?: (string | Article)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   updatedAt: string;
@@ -190,12 +190,12 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'cars';
-        value: string | Car;
+        relationTo: 'articles';
+        value: string | Article;
       } | null)
     | ({
-        relationTo: 'manufacturers';
-        value: string | Manufacturer;
+        relationTo: 'journals';
+        value: string | Journal;
       } | null)
     | ({
         relationTo: 'pages';
@@ -302,23 +302,23 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cars_select".
+ * via the `definition` "articles_select".
  */
-export interface CarsSelect<T extends boolean = true> {
+export interface ArticlesSelect<T extends boolean = true> {
   title?: T;
   featuredImage?: T;
-  manufacturer?: T;
+  journal?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "manufacturers_select".
+ * via the `definition` "journals_select".
  */
-export interface ManufacturersSelect<T extends boolean = true> {
+export interface JournalsSelect<T extends boolean = true> {
   title?: T;
   logo?: T;
-  cars?: T;
+  article?: T;
   updatedAt?: T;
   createdAt?: T;
 }
